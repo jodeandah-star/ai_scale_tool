@@ -1,0 +1,13 @@
+{
+  "name": "ai-scale-tool",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI 拟人化体验测评工具 —— 量表设计 / 数据收集 / 统计分析一站式平台（零依赖 Node.js）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
