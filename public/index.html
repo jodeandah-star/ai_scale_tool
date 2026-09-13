@@ -1072,7 +1072,7 @@ h1, h2, h3 { font-family: var(--font-serif); font-weight: 700; line-height: 1.3;
 <div class="topbar">
   <div class="topbar-brand">
     <div class="brand-mark">评</div>
-    <span>AI 拟人化体验测评</span>
+    <span>AI心理陪伴拟人化测评</span>
   </div>
   <nav class="topbar-nav">
     <button class="topbar-nav-item active" data-nav="home" onclick="navigate('home')">首页</button>
@@ -2836,6 +2836,10 @@ function initCreatePage() {
   setDataSource('link');
   // 切走页面再回来时，上一次快速分析的草稿要清掉，保证开关切换时 DOM 干净
   resetQuickCreate();
+  // 提交成功后 navigate() 会离开本页，但 btn.disabled=true 的状态还留在 DOM 上——
+  // 下次再回到创建页必须主动复位，否则按钮永远灰着、用户只能刷新页面才能恢复。
+  var cpBtn = document.getElementById('btn-create-project');
+  if (cpBtn) { cpBtn.disabled = false; cpBtn.textContent = '创建项目并生成链接'; }
 }
 
 /** 量表一变，维度级常模的可填维度也得跟着变——否则用户填的是上一套量表的维度名，永远匹配不上 */

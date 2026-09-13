@@ -1,4 +1,6 @@
 # 运行时产物（Render 免费实例的磁盘是临时的，这些每次部署都会重置，不该进仓库）
+# 演示数据冻结：上一次 commit 时的版本就是线上永久演示样本；本地可改可玩
+data/db.json
 data/backups/
 data/*.log
 *.log
