@@ -714,3 +714,38 @@ node _demo_seed.js --clean  # 看完删掉，不影响真实数据
 演示项目名为「【演示】报告依据示例（可删除）」，用的是当前量表的快照，
 合成数据的维度均值刻意拉出梯度（「陪伴感」最低），并混入带可疑标记的答卷，
 方便一次看全所有分支。**它不会碰你的真实项目和真实答卷。**
+
+---
+
+## 四、场景 D：Render 免费部署（公网演示站）
+
+仓库已自带 `package.json`（零依赖，`npm start` 直接跑）和示例数据 `data/db.json`（4 量表 / 5 项目 / 451 份答卷，作为演示内容随代码部署）。
+
+### 步骤
+
+1. 在 GitHub 新建一个仓库（如 `ai-scale-tool`），把本地代码推上去：
+   ```
+   git remote add origin https://github.com/<你的用户名>/ai-scale-tool.git
+   git push -u origin main
+   ```
+2. 打开 https://dashboard.render.com → **New +** → **Web Service** → 授权并选中该仓库
+3. 配置（其余全部默认）：
+   - **Runtime**: Node
+   - **Build Command**: `npm install`（没有依赖，秒过）
+   - **Start Command**: `npm start`
+   - **Instance Type**: Free
+4. 点 Create Web Service，等 1-2 分钟构建完成，得到 `https://xxx.onrender.com` 公网地址
+
+### 免费版数据机制（重要）
+
+Render 免费实例的磁盘是**临时的**：每次重新部署或实例重启，磁盘会恢复成仓库里的初始内容。
+
+- ✅ 示例数据（4 量表 / 5 项目 / 451 答卷）每次都在——这正是演示站想要的效果
+- ✅ 访客在演示站上随便折腾（建项目、删量表），重启后自动还原，不用担心被玩坏
+- ⚠️ 演示站上**新产生**的数据不会永久保存；想收集正式数据请用场景 B（局域网）或升级付费实例 + Persistent Disk
+- ⚠️ 免费实例 15 分钟无访问会休眠，首次打开需等约 30-60 秒唤醒；演示前先点开一次预热
+
+### 更新线上版本
+
+本地改完代码 → `git add -A && git commit -m "..."` → `git push`，Render 检测到推送自动重新部署。
+注意：部署会重置磁盘，线上手工产生的数据会丢；要改示例数据，直接改本地 `data/db.json` 再推送。
